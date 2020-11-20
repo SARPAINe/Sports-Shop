@@ -4,12 +4,16 @@ const { body, validationResult } = require('express-validator');
 
 const Category=require('../models/category');
 
+var auth=require('../config/auth');
+var isUser=auth.isUser;
+var isAdmin=auth.isAdmin;
+
 //Exports
 module.exports=router;
 
 // get category index
 
-router.get('/', (req, res) => {
+router.get('/',isAdmin, (req, res) => {
   Category.find({},(err,categories)=>{
     res.render('admin/categories',{
       categories:categories
@@ -18,7 +22,7 @@ router.get('/', (req, res) => {
 });
 
 // get add category
-router.get('/add-category', (req, res) => {
+router.get('/add-category',isAdmin, (req, res) => {
   var title="";
 
 
@@ -28,7 +32,7 @@ router.get('/add-category', (req, res) => {
 }); 
 
 // get edit category
-router.get('/edit-category/:id', (req, res) => {
+router.get('/edit-category/:id',isAdmin, (req, res) => {
   Category.findById(req.params.id,(err,foundCategory)=>{
     if(err) 
       return console.log(err);
@@ -161,7 +165,7 @@ router.post('/edit-category/:id',
 }); 
 
 //get delete category
-router.get('/delete-category/:id', (req, res) => {
+router.get('/delete-category/:id',isAdmin, (req, res) => {
   Category.findByIdAndDelete(req.params.id,(err)=>{
     if(err) return console.log(err);
 

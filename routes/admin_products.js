@@ -5,6 +5,10 @@ const mkdrip=require('mkdirp');
 const fs=require('fs-extra');
 const resizeImg=require('resize-img');
 
+var auth=require('../config/auth');
+var isUser=auth.isUser;
+var isAdmin=auth.isAdmin;
+
 //get product model
 const Product=require('../models/product');
 //get category model
@@ -15,7 +19,7 @@ module.exports=router;
 
 // get products index
 
-router.get('/', (req, res) => {
+router.get('/',isAdmin, (req, res) => {
   var count;
   Product.countDocuments(function (err,c){
     count=c;
@@ -32,7 +36,7 @@ router.get('/', (req, res) => {
 
 // get add product
 
-router.get('/add-product', (req, res) => {
+router.get('/add-product', isAdmin,(req, res) => {
   var title="";
   var desc="";
   var price="";
@@ -50,7 +54,7 @@ router.get('/add-product', (req, res) => {
 }); 
 
 // get edit product
-router.get('/edit-product/:id', (req, res) => {
+router.get('/edit-product/:id',isAdmin, (req, res) => {
 
   var errors;
   if(req.session.errors)
@@ -311,7 +315,7 @@ router.post('/product-gallery/:id', (req, res) => {
 });
 
 //get delete gallery image
-router.get('/delete-image/:image', (req, res) => {
+router.get('/delete-image/:image',isAdmin, (req, res) => {
   var originalImage='public/product_images/'+req.query.id+'/gallery/'+req.params.image;
   var thumbsImage='public/product_images/'+req.query.id+'/gallery/thumbs/'+req.params.image;
 
@@ -335,7 +339,7 @@ router.get('/delete-image/:image', (req, res) => {
 });
 
 //get delete product
-router.get('/delete-product/:id', (req, res) => {
+router.get('/delete-product/:id',isAdmin, (req, res) => {
     var id=req.params.id;
     var path='public/product_images/'+id;
 

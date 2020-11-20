@@ -4,12 +4,16 @@ const { body, validationResult } = require('express-validator');
 
 const Page=require('../models/page');
 
+var auth=require('../config/auth');
+var isUser=auth.isUser;
+var isAdmin=auth.isAdmin;
+
 //Exports
 module.exports=router;
 
 // get page index
 
-router.get('/', (req, res) => {
+router.get('/',isAdmin, (req, res) => {
   Page.find({}).sort({sorting:1}).exec((err,foundPages)=>{
     res.render('admin/pages',{
       pages:foundPages
@@ -18,7 +22,7 @@ router.get('/', (req, res) => {
 });
 
 // get add page
-router.get('/add-page', (req, res) => {
+router.get('/add-page',isAdmin, (req, res) => {
   var title="";
   var slug="";
   var content="";
@@ -31,7 +35,7 @@ router.get('/add-page', (req, res) => {
 }); 
 
 // get edit page
-router.get('/edit-page/:id', (req, res) => {
+router.get('/edit-page/:id',isAdmin, (req, res) => {
   Page.findById(req.params.id,(err,foundPage)=>{
     if(err) 
       return console.log(err);
@@ -187,7 +191,7 @@ body('content', 'Content is required').notEmpty()
 }); 
 
 //get delete page
-router.get('/delete-page/:id', (req, res) => {
+router.get('/delete-page/:id',isAdmin, (req, res) => {
   Page.findByIdAndDelete(req.params.id,(err)=>{
     if(err) return console.log(err);
 

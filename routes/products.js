@@ -1,6 +1,9 @@
 const express=require('express');
 const router=express.Router();
 var fs=require('fs-extra');
+var auth=require('../config/auth');
+var isUser=auth.isUser;
+var isAdmin=auth.isAdmin;
 
 const Product=require('../models/product');
 const Category=require('../models/category');
