@@ -5,3 +5,14 @@
   height:100px;
   weight:100px;
 }
+ul.gallery{
+  padding:0;
+}
+ul.gallery li{
+  display: inline-block;
+  margin: 20px;
+}
+
+table.alignmiddle td{
+  vertical-align: middle !important;
+}

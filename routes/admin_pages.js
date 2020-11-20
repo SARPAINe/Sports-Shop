@@ -92,6 +92,17 @@ body('content', 'Content is required').notEmpty()
         page.save((err)=>{
           if(err) 
           return console.log(err);
+
+          Page.find({}).sort({sorting:1}).exec((err,pages)=>{
+            if(err){
+              console.log(err);
+            }
+            else{
+              req.app.locals.pages=pages;
+            }
+          });
+
+
           req.flash('success','page added!');
           res.redirect('/admin/pages');
         });
@@ -154,6 +165,15 @@ body('content', 'Content is required').notEmpty()
             if(err)
             return console.log(err);
 
+            Page.find({}).sort({sorting:1}).exec((err,pages)=>{
+            if(err){
+              console.log(err);
+            }
+            else{
+              req.app.locals.pages=pages;
+            }
+          });
+
             req.flash('success','Page added!');
             res.redirect('/admin/pages');
           });
@@ -170,6 +190,16 @@ body('content', 'Content is required').notEmpty()
 router.get('/delete-page/:id', (req, res) => {
   Page.findByIdAndDelete(req.params.id,(err)=>{
     if(err) return console.log(err);
+
+    Page.find({}).sort({sorting:1}).exec((err,pages)=>{
+            if(err){
+              console.log(err);
+            }
+            else{
+              req.app.locals.pages=pages;
+            }
+          });
+
     req.flash('success','Page deleted');
     res.redirect('/admin/pages');
   });
