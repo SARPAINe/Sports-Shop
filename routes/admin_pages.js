@@ -13,7 +13,7 @@ module.exports=router;
 
 // get page index
 
-router.get('/',isAdmin, (req, res) => {
+router.get('/', isAdmin,(req, res) => {
   Page.find({}).sort({sorting:1}).exec((err,foundPages)=>{
     res.render('admin/pages',{
       pages:foundPages

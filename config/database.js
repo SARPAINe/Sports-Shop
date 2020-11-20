@@ -1,3 +1,3 @@
 module.exports={
-  database:'mongodb://localhost:27017/sportscart'
+  database:"mongodb+srv://admin-shaharin:Test123@cluster0.o5awp.mongodb.net/sportscart"
 }

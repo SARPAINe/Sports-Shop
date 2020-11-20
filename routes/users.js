@@ -63,7 +63,7 @@ body('password2', "Passwords don't match").custom((value,{req, loc, path}) => {
           email:email,
           username:username,
           password:password,
-          admin:1
+          admin:0
         });
 
         bcrypt.genSalt(10,(err,salt)=>{

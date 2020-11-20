@@ -20,12 +20,15 @@ module.exports=router;
 // get products index
 
 router.get('/',isAdmin, (req, res) => {
-  var count;
+  let count;
   Product.countDocuments(function (err,c){
     count=c;
+    console.log('inside '+count);
   });
-
+  
+  
   Product.find(function (err,products){
+    console.log('outside '+count);
     res.render('admin/products',{
       products:products,
       count:count
@@ -36,7 +39,7 @@ router.get('/',isAdmin, (req, res) => {
 
 // get add product
 
-router.get('/add-product', isAdmin,(req, res) => {
+router.get('/add-product',isAdmin, (req, res) => {
   var title="";
   var desc="";
   var price="";
@@ -54,7 +57,7 @@ router.get('/add-product', isAdmin,(req, res) => {
 }); 
 
 // get edit product
-router.get('/edit-product/:id',isAdmin, (req, res) => {
+router.get('/edit-product/:id', isAdmin,(req, res) => {
 
   var errors;
   if(req.session.errors)

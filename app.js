@@ -88,6 +88,7 @@ require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.get("*",(req,res,next)=>{
   //cart will be available on every get request because of this below line
   res.locals.cart=req.session.cart;
@@ -114,7 +115,11 @@ app.use('/admin/pages', adminPages);
 app.use('/admin/categories',adminCategories); 
 app.use('/admin/products',adminProducts); 
 
+let port=process.env.PORT;
+if(port == null || port ==""){
+  port=3000;
+}
 
-app.listen(3000, () => {
-  console.log('App listening on port 3000!');
+app.listen(port, () => {
+  console.log('Server has started!');
 });
