@@ -23,4 +23,4 @@ const UserSchema=mongoose.Schema({
   }
 });
 
-const Page=module.exports=mongoose.model('User',UserSchema);
+const User=module.exports=mongoose.model('User',UserSchema);
